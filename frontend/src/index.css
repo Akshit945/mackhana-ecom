@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Makhana Design System - Natural green earth-tone palette
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 120 25% 98%;
+    --foreground: 120 15% 15%;
+
+    --card: 120 25% 97%;
+    --card-foreground: 120 15% 15%;
+
+    --popover: 120 25% 98%;
+    --popover-foreground: 120 15% 15%;
+
+    --primary: 140 60% 45%;
+    --primary-foreground: 120 25% 98%;
+    --primary-glow: 140 60% 55%;
+
+    --secondary: 60 30% 90%;
+    --secondary-foreground: 120 15% 15%;
+
+    --muted: 110 20% 93%;
+    --muted-foreground: 120 15% 55%;
+
+    --accent: 80 50% 50%;
+    --accent-foreground: 120 25% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 120 25% 98%;
+
+    --border: 110 20% 88%;
+    --input: 110 20% 88%;
+    --ring: 140 60% 45%;
+
+    /* Custom gradients for hero and features */
+    --gradient-hero: linear-gradient(135deg, hsl(140 60% 45%), hsl(80 50% 50%));
+    --gradient-card: linear-gradient(145deg, hsl(120 25% 97%), hsl(110 20% 93%));
+    --gradient-feature: linear-gradient(180deg, hsl(120 25% 98%), hsl(110 20% 95%));
+    
+    /* Shadows with primary color tint */
+    --shadow-primary: 0 10px 30px -10px hsl(140 60% 45% / 0.2);
+    --shadow-card: 0 4px 15px -5px hsl(120 15% 15% / 0.1);
+    --shadow-glow: 0 0 40px hsl(140 60% 55% / 0.3);
+
+    /* Smooth transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 120 15% 8%;
+    --foreground: 120 25% 95%;
+
+    --card: 120 15% 10%;
+    --card-foreground: 120 25% 95%;
+
+    --popover: 120 15% 8%;
+    --popover-foreground: 120 25% 95%;
+
+    --primary: 140 60% 50%;
+    --primary-foreground: 120 15% 8%;
+    --primary-glow: 140 60% 60%;
+
+    --secondary: 120 15% 20%;
+    --secondary-foreground: 120 25% 95%;
+
+    --muted: 120 15% 18%;
+    --muted-foreground: 120 15% 65%;
+
+    --accent: 80 50% 55%;
+    --accent-foreground: 120 15% 8%;
+
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 120 25% 95%;
+
+    --border: 120 15% 25%;
+    --input: 120 15% 25%;
+    --ring: 140 60% 50%;
+
+    /* Dark mode gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(140 60% 40%), hsl(80 50% 45%));
+    --gradient-card: linear-gradient(145deg, hsl(120 15% 12%), hsl(120 15% 8%));
+    --gradient-feature: linear-gradient(180deg, hsl(120 15% 10%), hsl(120 15% 8%));
+    
+    --shadow-primary: 0 10px 30px -10px hsl(140 60% 50% / 0.3);
+    --shadow-card: 0 4px 15px -5px hsl(0 0% 0% / 0.3);
+    --shadow-glow: 0 0 40px hsl(140 60% 50% / 0.2);
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
