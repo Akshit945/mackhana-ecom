@@ -87,9 +87,21 @@ const Products = () => {
   const [quantities, setQuantities] = useState<Record<number, number>>({});
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    fetchProducts().then(setProducts);
-    setLoading(false);
+
+    const fetchData = async () => {
+      try{
+        await fetchProducts().then(setProducts);
+      }
+      catch{
+        console.log('Error in getting Products List');
+      }
+      finally{
+        setLoading(false);
+      }
+    };
+    fetchData();
   }, []);
   const [searchTerm, setSearchTerm] = useState("");
   const {
@@ -133,10 +145,22 @@ const Products = () => {
     product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     product.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  if (loading) return <div>Loading...</div>;
+
+  if(!loading && products.length===0){
+    return <div className="min-h-screen bg-background">
+    <Header />
+    <main className="container mx-auto px-4 py-8">
+      <div className="text-center py-16">
+        <h1 className="text-3xl font-bold text-foreground mb-4">Products Not Found</h1>
+        <Button onClick={() => window.location.reload()}>Refresh</Button>
+      </div>
+    </main>
+    <Footer />
+  </div>
+  }
+
   return <div className="min-h-screen bg-background">
       <Header />
-      
       <main className="container mx-auto px-4 py-8">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-foreground mb-4">Our Premium Makhana Collection</h1>
@@ -156,71 +180,79 @@ const Products = () => {
             />
           </div>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProducts.map(product => <Card key={product._id} className="group hover:shadow-lg transition-shadow">
-              <CardHeader className="p-0">
-                <div className="relative overflow-hidden rounded-t-lg">
-                  <img src={product.image} alt={product.name} className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
-                  <Badge className="absolute top-3 right-3 bg-primary text-primary-foreground">
-                    {Math.round((product.originalPrice - product.price) / product.originalPrice * 100)}% OFF
-                  </Badge>
-                </div>
-              </CardHeader>
-              
-              <CardContent className="p-6">
-                <CardTitle className="text-xl mb-2">{product.name}</CardTitle>
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="flex items-center gap-1">
-                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    <span className="text-sm font-medium">{product.rating}</span>
+  
+        {
+          loading?(
+          <div className="min-h-screen bg-background">
+             <main className="container mx-auto px-4 py-24 flex flex-col items-center justify-center">
+              <div className="flex flex-col items-center space-y-6 text-center">
+                <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-green-500"></div>
+                <h1 className="text-3xl font-bold text-gray-800">Hold on... We're getting things ready!</h1>
+                <p className="text-gray-500 text-lg">Thank you for your patience. Your snack is on the way!</p>
+              </div>
+            </main>
+          </div>
+          ):(
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredProducts.map(product => <Card key={product._id} className="group hover:shadow-lg transition-shadow">
+                <CardHeader className="p-0">
+                  <div className="relative overflow-hidden rounded-t-lg">
+                    <img src={product.image} alt={product.name} className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+                    <Badge className="absolute top-3 right-3 bg-primary text-primary-foreground">
+                      {Math.round((product.originalPrice - product.price) / product.originalPrice * 100)}% OFF
+                    </Badge>
+                  </div>
+                </CardHeader>
+                
+                <CardContent className="p-6">
+                  <Link to={`/product/${product._id}`}>
+                    <CardTitle className="text-xl mb-2">{product.name}</CardTitle>
+                  </Link>
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="flex items-center gap-1">
+                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                      <span className="text-sm font-medium">{product.rating}</span>
+                    </div>
+                    
                   </div>
                   
-                </div>
-                
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-2xl font-bold text-primary">₹{product.price}</span>
-                  <span className="text-lg text-muted-foreground line-through">₹{product.originalPrice}</span>
-                </div>
-
-                <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{product.description}</p>
-
-                <div className="space-y-4">
-                  <div className="flex items-center gap-4">
-                    
-                    <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-2xl font-bold text-primary">₹{product.price}</span>
+                    <span className="text-lg text-muted-foreground line-through">₹{product.originalPrice}</span>
+                  </div>
+  
+                  <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{product.description}</p>
+  
+                  <div className="space-y-4">
+  
+                    <div className="flex gap-2">
+                      <Link to={`/product/${product._id}`} className="flex-1">
+                        <Button variant="outline" className="w-full">View Details</Button>
+                      </Link>
                       
-                      
-                      
-                      
-                      
+                      {!isInCart(product._id) ? <Button onClick={() => addToCart(product)} className="flex-1">
+                          <ShoppingCart className="h-4 w-4 mr-2" />
+                          Add to Cart
+                        </Button> : <div className="flex-1 flex items-center gap-2 bg-muted rounded-md p-2">
+                          <Button variant="outline" size="icon" onClick={() => updateCartItemQuantity(product._id, getCartQuantity(product._id) - 1)} className="h-8 w-8">
+                            <Minus className="h-3 w-3" />
+                          </Button>
+                          
+                          <span className="flex-1 text-center font-medium">{getCartQuantity(product._id)}</span>
+                          
+                          <Button variant="outline" size="icon" onClick={() => updateCartItemQuantity(product._id, getCartQuantity(product._id) + 1)} className="h-8 w-8">
+                            <Plus className="h-3 w-3" />
+                          </Button>
+                        </div>}
                     </div>
                   </div>
+                </CardContent>
+              </Card>)}
+          </div>
+          )
+        }
 
-                  <div className="flex gap-2">
-                    <Link to={`/product/${product._id}`} className="flex-1">
-                      <Button variant="outline" className="w-full">View Details</Button>
-                    </Link>
-                    
-                    {!isInCart(product._id) ? <Button onClick={() => addToCart(product)} className="flex-1">
-                        <ShoppingCart className="h-4 w-4 mr-2" />
-                        Add to Cart
-                      </Button> : <div className="flex-1 flex items-center gap-2 bg-muted rounded-md p-2">
-                        <Button variant="outline" size="icon" onClick={() => updateCartItemQuantity(product._id, getCartQuantity(product._id) - 1)} className="h-8 w-8">
-                          <Minus className="h-3 w-3" />
-                        </Button>
-                        
-                        <span className="flex-1 text-center font-medium">{getCartQuantity(product._id)}</span>
-                        
-                        <Button variant="outline" size="icon" onClick={() => updateCartItemQuantity(product._id, getCartQuantity(product._id) + 1)} className="h-8 w-8">
-                          <Plus className="h-3 w-3" />
-                        </Button>
-                      </div>}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>)}
-        </div>
+       
       </main>
 
       <Footer />

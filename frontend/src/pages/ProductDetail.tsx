@@ -141,31 +141,59 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetchProductById(id).then(setProduct);
-    setLoading(false);
+    const fetchData = async () => {
+      try{
+        await fetchProductById(id).then(setProduct);
+      }
+      catch{
+        console.log('Error in getting Product');
+      }
+      finally{
+        setLoading(false);
+      }
+      
+    };
+    fetchData();
   }, [id]);
 
   const cartItem = items.find(item => String(item._id) === id);
   const cartQuantity = cartItem ? cartItem.quantity : 0;
   const [quantity, setQuantity] = useState(cartQuantity || 1);
+  
+  if(loading){
+    return <div className="min-h-screen bg-background">
+    <Header />
+    <main className="container mx-auto px-4 py-24 flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center space-y-6 text-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-green-500"></div>
+        <h1 className="text-3xl font-bold text-gray-800">Hold on... We're getting things ready!</h1>
+        <p className="text-gray-500 text-lg">Thank you for your patience. Your snack is on the way!</p>
+        <Link to="/products">
+          <Button>Back to Products</Button>
+        </Link>
+      </div>
+    </main>
+    <Footer />
+  </div>
+  }
 
 
-  // if (!product) {
-  //   return (
-  //     <div className="min-h-screen bg-background">
-  //       <Header />
-  //       <main className="container mx-auto px-4 py-8">
-  //         <div className="text-center py-16">
-  //           <h1 className="text-3xl font-bold text-foreground mb-4">Product Not Found</h1>
-  //           <Link to="/products">
-  //             <Button>Back to Products</Button>
-  //           </Link>
-  //         </div>
-  //       </main>
-  //       <Footer />
-  //     </div>
-  //   );
-  // }
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="container mx-auto px-4 py-8">
+          <div className="text-center py-16">
+            <h1 className="text-3xl font-bold text-foreground mb-4">Product Not Found</h1>
+            <Link to="/products">
+              <Button>Back to Products</Button>
+            </Link>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   const handleAddToCart = () => {
     addItem({
@@ -208,8 +236,7 @@ const ProductDetail = () => {
       setQuantity(quantity + 1);
     }
   };
-  if (loading) return <div>Loading...</div>;  
-  if (!product) return <div>Product not found</div>;
+  
   return (
     <div className="min-h-screen bg-background">
       <Header />
