@@ -28,7 +28,7 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/contact", contactRoutes);
 
 app.get('/', (req, res) => {
-  res.send("This is running");
+  res.send("This is running great");
 });
 
 
