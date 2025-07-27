@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import {
@@ -205,7 +205,10 @@ const Checkout = () => {
                 {cartItems.map((item) => (
                   <div key={item._id} className="flex justify-between items-center p-3 border border-border rounded-lg">
                     <div>
+                      <Link to={`/product/${item._id}`}>
                       <h4 className="font-medium">{item.name}</h4>
+                      </Link>
+                     
                       <div className="flex gap-2 mt-1">
                         <Badge variant="secondary">{item.weight}</Badge>
                         <span className="text-sm text-muted-foreground">Qty: {item.quantity}</span>
@@ -233,7 +236,7 @@ const Checkout = () => {
                   </div>
                   {shipping > 0 && (
                     <p className="text-sm text-muted-foreground">
-                      Add ₹{DELIVERY_CHARGE - subtotal} more for free shipping
+                      Add ₹{MIN_ORDER_AMOUNT - subtotal} more for free shipping
                     </p>
                   )}
                   
