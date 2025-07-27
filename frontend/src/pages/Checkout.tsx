@@ -83,9 +83,7 @@ const Checkout = () => {
         body: JSON.stringify({ amount: total * 100 }),
       });
       // Debug logging for order creation response
-      console.log("Order creation response status:", response.status);
       const responseText = await response.clone().text();
-      console.log("Order creation response:", responseText);
       if (!response.ok) {
         type ErrorData = { message?: string };
         let errorData: ErrorData = {};
@@ -103,10 +101,11 @@ const Checkout = () => {
         key: RazorpayKey,
         amount: order.amount,
         currency: order.currency,
-        name: "McKhana",
+        name: "McKhana Hub",
         description: "Complete your purchase",
         order_id: order.id,
         handler: async (razorpayResponse: { razorpay_order_id: string; razorpay_payment_id: string; razorpay_signature: string }) => {
+          setLoading(true);
           const verifyResponse = await fetch(`${ApiUrl}/payments/verify-payment`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -129,6 +128,7 @@ const Checkout = () => {
           if (verifyResponse.ok) {
             const data = await verifyResponse.json();
             clearCart();
+            setLoading(false);
             navigate(`/success/${data.order.razorpay_order_id}`, { state: { orderDetails: data } });
           } else {
             type ErrorData = { message?: string };
@@ -169,6 +169,25 @@ const Checkout = () => {
 
     await handlePayment(data);
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background">
+    <Header />
+    <main className="container mx-auto px-4 py-24 flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center space-y-6 text-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-green-500"></div>
+        <h1 className="text-3xl font-bold text-gray-800">Hold on... We're getting things ready!</h1>
+        <p className="text-gray-600 text-lg font-medium flex items-center gap-2">
+          <svg className="w-5 h-5 text-yellow-500 animate-pulse" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 11.25h-1.5v-1.5h1.5v1.5zm0-3h-1.5V6h1.5v4.25z"/></svg>
+          Please do not close this window.
+        </p>
+      </div>
+    </main>
+    <Footer />
+  </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
