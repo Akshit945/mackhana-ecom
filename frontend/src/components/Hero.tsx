@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Star } from "lucide-react";
 import heroImage from "@/assets/hero-mackhana.jpg";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
@@ -41,13 +44,13 @@ const Hero = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-            <Button variant="hero" size="lg" className="group">
+            <Button onClick={() => navigate("/products")} variant="hero" size="lg" className="group">
               Shop Makhana
               <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Button>
-            <Button variant="outline" size="lg">
+            {/* <Button onClick={() => navigate("/health_benifits")} variant="outline" size="lg">
               Health Benefits
-            </Button>
+            </Button> */}
           </div>
 
           {/* Stats */}

@@ -10,10 +10,11 @@ const Header = () => {
   return <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo */}
+        <Link to={'/'}>
         <div className="flex items-center space-x-2">
-          <h1 className="text-2xl font-bold text-primary">Makhana</h1>
-          
-        </div>
+          <h1 className="text-2xl font-bold text-primary">Makhana Hub</h1>
+        </div></Link>
+        
 
         {/* Navigation - Hidden on mobile */}
         <nav className="hidden md:flex items-center space-x-8">
@@ -32,9 +33,9 @@ const Header = () => {
                 </Badge>}
             </Button>
           </Link>
-          <Button variant="ghost" size="icon" className="md:hidden">
+          {/* <Button variant="ghost" size="icon" className="md:hidden">
             <Menu className="h-5 w-5" />
-          </Button>
+          </Button> */}
         </div>
       </div>
     </header>;

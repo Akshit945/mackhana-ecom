@@ -10,16 +10,16 @@ const Footer = () => {
               Your trusted partner for authentic, premium quality foods sourced directly from farms to your table.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="https://www.facebook.com/" className="text-muted-foreground hover:text-primary transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="https://www.instagram.com" className="text-muted-foreground hover:text-primary transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="https://x.com" className="text-muted-foreground hover:text-primary transition-colors">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="https://www.youtube.com" className="text-muted-foreground hover:text-primary transition-colors">
                 <Youtube className="h-5 w-5" />
               </a>
             </div>
@@ -29,16 +29,16 @@ const Footer = () => {
           <div className="space-y-4">
             <h4 className="font-semibold">Quick Links</h4>
             <ul className="space-y-2 text-muted-foreground">
-              <li><a href="#" className="hover:text-primary transition-colors">About Us</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Products</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Categories</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Blog</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Contact</a></li>
+              <li><a href="/contact" className="hover:text-primary transition-colors">About Us</a></li>
+              <li><a href="/products" className="hover:text-primary transition-colors">Products</a></li>
+              {/* <li><a href="#" className="hover:text-primary transition-colors">Categories</a></li>
+              <li><a href="#" className="hover:text-primary transition-colors">Blog</a></li> */}
+              <li><a href="/contact" className="hover:text-primary transition-colors">Contact</a></li>
             </ul>
           </div>
 
           {/* Customer Care */}
-          <div className="space-y-4">
+          {/* <div className="space-y-4">
             <h4 className="font-semibold">Customer Care</h4>
             <ul className="space-y-2 text-muted-foreground">
               <li><a href="#" className="hover:text-primary transition-colors">Help Center</a></li>
@@ -47,7 +47,7 @@ const Footer = () => {
               <li><a href="#" className="hover:text-primary transition-colors">Privacy Policy</a></li>
               <li><a href="#" className="hover:text-primary transition-colors">Terms of Service</a></li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Contact Info */}
           <div className="space-y-4">
@@ -73,9 +73,9 @@ const Footer = () => {
         <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-muted-foreground text-sm">© 2025 Mackhana. All rights reserved.</p>
           <div className="flex space-x-6 text-sm text-muted-foreground mt-4 md:mt-0">
-            <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
+            {/* <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-primary transition-colors">Cookie Policy</a>
+            <a href="#" className="hover:text-primary transition-colors">Cookie Policy</a> */}
           </div>
         </div>
       </div>
